@@ -6,6 +6,7 @@
 //  Copyright © 2016年 崔健. All rights reserved.
 //
 
+
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
@@ -18,6 +19,7 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 - (void)saveContext;
+
 - (NSURL *)applicationDocumentsDirectory;
 
 

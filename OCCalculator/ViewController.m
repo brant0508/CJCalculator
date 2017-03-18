@@ -10,75 +10,80 @@
 #import "Calculator.h"
 
 
-
-
 @implementation ViewController
 {
-    char  op;
-    int  currentNumber;
-    BOOL  firstOperand,isNumberator;
-    Calculator  *myCalculator;
-    NSMutableString *displayString;
+    char  op;       //     判断操作符
+    int  currentNumber;     //  表示现在输入的数字
+    BOOL  firstOperand,isNumberator;//  跟踪第一个和第二个操作数，以及用户当前输入的操作数的分子和分母
+    Calculator  *myCalculator;      //用于执行分数之间的计算的计算器对象
+    NSMutableString *displayString;     //用于存储显示当前结果的字符串
 }
 
-@synthesize display;
+@synthesize display; //合成属性
 
 - (void)viewDidLoad {
     //覆盖应用程序载入的自定义方法
-
+    //初始化
     firstOperand = YES;
     isNumberator = YES;
-    displayString = [NSMutableString stringWithCapacity:40];
+    displayString = [NSMutableString stringWithCapacity:40]; //限定字符串容量
     myCalculator = [[Calculator alloc] init];
     // Do any additional setup after loading the view, typically from a nib.
 }
 
 -(void) processDigit:(int)digit
 {
-    currentNumber = currentNumber *10 +digit;
-
+        //显示当前数字
+    currentNumber = digit;
+        //show   pressed  number
     [displayString appendString:
-            [NSString stringWithFormat: @"%i",digit]];
+            [NSString stringWithFormat: @"%i",currentNumber]];
     display.text = displayString;
 }
 
 -(IBAction)clickDigit: (UIButton *) sender
 {
-    long    digit = sender.tag;
-        //通过获取按钮的tag属性，来获得tag的的值
+
+    long   digit = sender.tag;
+        //通过获取按钮的tag属性，来获得tag上的数字
     [self processDigit: (int)digit];
 
 }
 
--(void) processOp:(char)theOp
+    //判断操作符
+-(void) processOp:  (char)  theOp
 {
-    NSString *opStr;
+    //用于临时储存操作符号
+    NSString  *opString;
 
     op = theOp;
 
     switch (theOp) {
         case '+':
-            opStr = @"  +  ";
+            opString = @"  +  ";
             break;
         case '-':
-            opStr = @"  -  ";
+            opString = @"  -  ";
             break;
             case '*':
-            opStr = @"  *  ";
+            opString = @"  *  ";
             break;
             case '/':
-            opStr = @"  /  ";
+            opString = @"  /  ";
             break;
     }
-
+//每次操作运算符判断之后进行   是否为分数计算判断
     [self storeFracPart];
+//    进行第二个操作数或者第二个分数的输入
     firstOperand = NO;
     isNumberator = YES;
 
-    [displayString appendString: opStr];
+        //添加操作符并更新视图
+    [displayString appendString: opString];
     display.text = displayString;
 }
 
+//分数计算或者操作数计算判断
 -(void)storeFracPart
 {
     if (firstOperand) {
@@ -110,7 +115,6 @@
 }
 
 //算法操作键
-
 -(IBAction)  clickPlus
 {
     [self processOp:'+'];
@@ -134,21 +138,22 @@
 //功能键
 
 -(IBAction) clickEquals
-{
+{           //
     if ( firstOperand == NO)  {
         [self storeFracPart];
         [myCalculator performOperation: op];
 
         [displayString appendString:@" = "];
+            //传入分数计算结果，转换成字符串
         [displayString appendString: [myCalculator.accumulator  converToString ] ];
         display.text = displayString;
-
+            //重设
         currentNumber = 0;
         isNumberator = YES;
         firstOperand = YES;
         [displayString setString:@" "];
-
     }
+
 }
 
 -(IBAction) clickClear
@@ -162,12 +167,12 @@
     display.text = displayString;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 @end
+
+
+
+
+
 
 
 

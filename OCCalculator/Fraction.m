@@ -12,17 +12,20 @@
 
 @synthesize numerator,denominator;
 
+
+    //设置分子和分母
 -(void) setTo:(int)n over:(int)d
 {
     numerator = n;
     denominator = d;
 }
 
+    //打印  分子、分母
 -(void)print
 {
     NSLog(@"%i/%i",numerator,denominator);
 }
-
+//判断分母是否为零，否 返回double型分数
 -(double) converToNum
 {
     if (denominator != 0)
@@ -30,7 +33,7 @@
     else
         return NAN;
 }
-
+    //将分数转换成字符串表示
 -(NSString *)  converToString
 {
     if (numerator == denominator)
@@ -99,7 +102,7 @@
 
     return  result;
 }
-
+    //简化分数
 -(void) reduce
 {
     int u = numerator;
